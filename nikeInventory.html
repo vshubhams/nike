@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nike inventory system</title>
+    <style>
+        *{
+            margin: 0;
+        }
+        .main{
+            display: flex;
+            flex-direction: row;
+            border: solid 1px;
+        }
+        .formDiv{
+            flex-basis: 25%;
+        }
+        .formDiv>button{
+            height: 30px;
+            margin: 10px;
+        }
+        input{
+            width: 80%;
+            height: 30px;
+            margin: 10px;
+        }
+
+        #grid{
+            flex-basis: 75%;
+            display: grid;
+            grid-template-columns: 30% 30% 30%;
+            justify-content: space-around;
+        }
+        .product{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: red;
+        }
+        .btnDiv{
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+   <div class="main">
+       <div class="formDiv">
+               <input type="text" placeholder="Name" id="name"><br>
+               <input type="number" placeholder="Price" id="price"><br>
+               <input type="text" placeholder="Category" id="cat"><br>
+               <input type="text" placeholder="Estimated delivery" id="estimate"><br>
+               <input type="text" placeholder="Description" id="descrip"><br>
+               <input type="text" placeholder="Image url" id="img"><br>
+
+           <button id="addBtn">Add Product</button>
+       </div>
+       <div id="grid">
+       </div>
+   </div> 
+</body>
+</html>
+
+<script>
+
+
+    var addBtn = document.getElementById('addBtn');
+    addBtn.addEventListener('click', addProduct);
+
+    // https://via.placeholder.com/150x150
+    
+    
+    var i=0;
+    function addProduct(){
+        var grid= document.getElementById('grid')
+        var name = document.getElementById('name').value;
+        var price = document.getElementById('price').value;
+        var category = document.getElementById('cat').value;
+        var estimate = document.getElementById('estimate').value;
+        var descrip = document.getElementById('descrip').value;
+        var img = document.getElementById('img').value;
+        
+        /// Creating the product
+        let product = document.createElement('div');
+        product.setAttribute('class','product')
+        product.setAttribute('id',`divId${i}`)
+        
+        let heading1= document.createElement('h1');
+        heading1.innerHTML=`${name}`
+        
+        let desc=document.createElement('p');
+        desc.innerHTML=`${descrip}`
+        
+        let image = document.createElement('img');
+        image.setAttribute('src',`${img}`)
+        
+        let cat = document.createElement('p');
+        cat.innerHTML=`Category:${category}`
+        
+        let est = document.createElement('p');
+        est.innerHTML=`Deliver in ${estimate} days`
+        
+        let cost = document.createElement('p');
+        cost.innerHTML=`₹: ${price}`
+        cost.setAttribute('id',`costId${i}`)
+        
+        let btnDiv =document.createElement('div')
+        btnDiv.setAttribute('class','btnDiv')
+        console.log(btnDiv)
+        
+        
+        let removeBtn =document.createElement('button')
+        removeBtn.innerHTML='Remove'
+        removeBtn.setAttribute('id','remBtn'+i);
+        removeBtn.setAttribute('onclick',`removeProduct("divId${i}")`)
+        console.log(removeBtn)
+        
+        let updateBtn =document.createElement('button')
+        updateBtn.innerHTML='Update'
+        updateBtn.setAttribute('id','addBtn'+i);
+        updateBtn.setAttribute('onclick', ` updateProduct("costId${i}")`)
+
+        
+        i++;
+        grid.appendChild(product)
+        product.appendChild(heading1)
+        product.appendChild(desc)
+        product.appendChild(image)
+        product.appendChild(cost)
+        product.appendChild(cat)
+        product.appendChild(est)
+        product.appendChild(btnDiv)
+        btnDiv.appendChild(removeBtn)
+        btnDiv.appendChild(updateBtn)
+    }
+
+    function removeProduct(id){
+        let product = document.getElementById(id);
+        product.remove()
+    }
+    function updateProduct(costid){
+       let priceId = document.getElementById(costid);
+       var new_price = prompt(` Enter new price`)
+       priceId.innerHTML='₹: '+new_price;
+    }
+
+</script>
